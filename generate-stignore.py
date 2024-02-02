@@ -4,6 +4,12 @@
 import logging
 import os
 from glob import glob
+from pathlib import Path
+import sys
+
+currentDir = Path(__file__).parent.absolute()
+print(currentDir)
+sys.path.append(str(currentDir))
 
 from gitignore_parser import parse_gitignore
 
@@ -20,8 +26,9 @@ def matches(path: str) -> bool:
     except ValueError:
         return False
 
-
-for gitignore_path in glob("**/.gitignore", recursive=True, include_hidden=True):
+#TODO:Add a cli to output to a file
+#TODO:Add a note that says that this file was automatically generated and link the repo
+for gitignore_path in glob("**/.gitignore", recursive=True):
     if matches(gitignore_path):
         logging.info(f"Ignore {gitignore_path}")
         continue
